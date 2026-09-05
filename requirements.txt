@@ -1,0 +1,6 @@
+fastapi
+razorpay
+python-dotenv
+psycopg[binary]
+pydantic
+setuptools
