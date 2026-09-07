@@ -3,6 +3,8 @@ from src.services.payment_service import payment
 from src.services.database_service import db
 import os
 from fastapi.responses import JSONResponse
+from src.api.auth import get_current_admin
+
 
 eventrouter = APIRouter(prefix='/event',tags=['event'])
 
@@ -50,15 +52,21 @@ def register_user(data:dict):
         )
    
     
+from fastapi import Depends
 
+@eventrouter.get("/get-all-users")
+def get_all(
+    admin_id=Depends(get_current_admin)
+):
 
-@eventrouter.get('/get-all-users')
-def get_all():
-    columns, rows = db.get_all_user(table='event_registrations')
+    columns, rows = db.get_all_user(
+        table="event_registrations"
+    )
+
     return {
-        "success":True,
-        "rows":rows,
-        "clumns":columns
+        "success": True,
+        "rows": rows,
+        "columns": columns
     }
     
     
